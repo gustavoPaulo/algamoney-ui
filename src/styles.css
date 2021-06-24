@@ -1,0 +1,144 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #404C51;
+}
+
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+  text-decoration: underline;
+}
+
+a.p-button:hover,
+a.p-button:focus {
+  text-decoration: none;
+}
+
+form .p-button {
+  margin-right: .25em;
+}
+
+label {
+  font-weight: bold;
+}
+
+.col-acoes .p-button {
+  margin: 9px;
+}
+
+.button-link-nova-acao {
+  margin-left: 10px;
+}
+
+.lancamentoForm {
+  margin: 10px;
+}
+
+.pessoaForm {
+  margin: 10px;
+}
+
+.categoriaForm {
+  margin: 10px;
+}
+
+.usuarioForm {
+  margin: 10px;
+}
+
+.panel-dashboard {
+  margin: 10px;
+}
+
+.relatoriosForm {
+  margin: 10px;
+}
+
+.senhaForm {
+  margin: 10px;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+    margin: 0 auto;
+  }
+
+  .button-link-nova-acao {
+    margin-left: 0px;
+  }
+}
+
+@media (min-width: 40em) {
+  .col-header{
+    text-align: center !important;
+  }
+
+  .col-valor-header {
+    text-align: center !important;
+    width: 120px;
+  }
+
+  .col-valor {
+    text-align: left !important;
+  }
+
+  .col-data-header {
+    text-align: center !important;
+    width: 120px;
+  }
+
+  .col-data {
+    text-align: center !important;
+  }
+
+  .col-acoes {
+    width: 117px;
+    text-align: center !important;
+  }
+
+  .col-acoes .p-button {
+    margin: 2px;
+  }
+
+  .lancamentoForm {
+    margin: 10px;
+  }
+
+  .pessoaForm {
+    margin: 10px;
+  }
+
+  .categoriaForm {
+    margin: 10px;
+  }
+
+  .usuarioForm {
+    margin: 10px;
+  }
+
+  .tabela-lancamento {
+    margin: 0px;
+  }
+
+  .tabela-pessoa {
+    margin: 0px;
+  }
+
+  .tabela-categoria {
+    margin: 0px;
+  }
+
+  .tabela-usuario {
+    margin: 0px;
+  }
+
+  .senhaForm {
+    margin: 10px;
+  }
+
+}

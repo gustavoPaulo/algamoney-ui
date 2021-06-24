@@ -1,0 +1,43 @@
+<p-table [value]="usuarios" styleClass="p-datatable-gridlines p-datatable-striped"
+              [responsive]="true"
+              [paginator]="true" [rows]="filtro.intensPorPagina"
+              [lazy]="true" [totalRecords]="totalRegistros"
+              (onLazyLoad)="aoMudarPagina($event)"
+              #tabela>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="col-header">Nome</th>
+                <th class="col-header">E-mail</th>
+                <th class="col-acoes"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-usuario>
+            <tr>
+                <td><span class="p-column-title">Nome</span>
+                  {{usuario.nome}}</td>
+                <td><span class="p-column-title">E-mail</span>
+                  {{usuario.email}}</td>
+
+                <td class="col-acoes">
+                  <a [routerLink]="['/usuarios', usuario.codigo]">
+                    <button pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"
+                    [disabled]="!authUsuario.temPermissao('ROLE_CADASTRAR_USUARIO')"></button>
+                  </a>
+                  <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"
+                  (click)="confirmarExclusao(usuario)"
+                  [disabled]="!authUsuario.temPermissao('ROLE_REMOVER_USUARIO')"
+                  [disabled]="naoExcluirUsuarioLogado(usuario)"></button>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="3">
+              Nenhum usuário encontrado.
+            </td>
+          </tr>
+        </ng-template>
+
+    </p-table>

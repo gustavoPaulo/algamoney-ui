@@ -1,0 +1,51 @@
+<div class="container">
+  <form #senhaForm="ngForm" autocomplete="off" class="senhaForm"
+    (ngSubmit)="validarSenha(senhaForm)">
+
+    <div class="p-grid">
+      <div class="p-col-12">
+        <h1>Alterando Senha</h1>
+      </div>
+
+      <div class="p-col-12 p-fluid">
+        <label>Nome</label>
+        <input pInputText type="text" name="nome" ngModel #nome="ngModel"
+          [(ngModel)]="usuario.nome" disabled>
+      </div>
+
+      <div class="p-col-12 p-md-6 p-fluid">
+        <label>E-mail</label>
+        <input pInputText type="email" name="email" ngModel #email="ngModel"
+          [(ngModel)]="usuario.email" disabled>
+      </div>
+
+      <div class="p-col-12 p-md-6 p-fluid">
+        <label>Senha antiga</label>
+        <input pInputText type="password" name="senha"
+          [(ngModel)]="usuario.senha" ngModel #senha="ngModel"
+          required minlength="5" placeholder="Digite sua senha antiga">
+
+        <app-message [control]="senha" error="required"
+          text="Informe a senha antiga"></app-message>
+
+        <app-message [control]="senha" error="minlength"
+          text="Mínimo de {{ senha.errors?.minlength?.requiredLength }} caracteres"></app-message>
+      </div>
+
+      <div class="p-col-12 p-md-6 p-fluid">
+        <label>Nova senha</label>
+        <input pInputText type="password" name="novaSenha" [(ngModel)]="novaSenha">
+      </div>
+
+      <div class="p-col-12 p-md-6 p-fluid">
+        <label>Confirmar senha</label>
+        <input pInputText type="password" name="confirmarSenha" [(ngModel)]="confirmarSenha">
+      </div>
+
+      <div class="p-col-12">
+        <button pButton type="submit" label="Salvar" [disabled]="senhaForm.invalid"></button>
+      </div>
+    </div>
+
+  </form>
+</div>

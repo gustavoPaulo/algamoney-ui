@@ -1,0 +1,34 @@
+<div class="container">
+  <form #categoriaForm="ngForm" autocomplete="off" class="categoriaForm"
+    (ngSubmit)="salvar(categoriaForm)">
+
+    <div class="p-grid">
+      <div class="p-col-12">
+        <h1>{{ editando ? 'Edição de' : 'Nova' }} Categoria</h1>
+      </div>
+
+      <div class="p-col-12 p-md-9 p-fluid">
+        <label>Nome</label>
+        <input pInputText type="text" name="nome" ngModel #nome="ngModel"
+         required minlength="3" maxlength="25" [(ngModel)]="categoria.nome">
+
+        <app-message [control]="nome" error="required"
+          text="Informe o nome"></app-message>
+
+        <app-message [control]="nome" error="minlength"
+          text="Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres">
+        </app-message>
+      </div>
+
+      <div class="p-col-12">
+        <button pButton type="submit" label="Salvar" [disabled]="categoriaForm.invalid"></button>
+        <button pButton type="button" label="Nova" class="p-button-info"
+          (click)="novo(categoriaForm)"></button>
+        <a routerLink="/categorias">
+          <p-button label="Voltar para a pesquisa" styleClass="p-button-link"></p-button>
+        </a>
+      </div>
+    </div>
+
+  </form>
+</div>

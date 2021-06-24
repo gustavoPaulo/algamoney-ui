@@ -1,0 +1,33 @@
+<div class="container">
+
+  <div class="p-grid">
+
+    <form autocomplete="off" class="p-col-12" (ngSubmit)="pesquisar()">
+
+    <div class="p-col-12">
+      <h1>Usuários</h1>
+    </div>
+
+    <div class="p-col-12 p-fluid">
+      <label>Nome</label>
+      <input pInputText type="text" autofocus="true" name="nome" [(ngModel)]="filtro.nome"/>
+    </div>
+
+    <div class="p-col-12">
+      <button pButton type="submit" label="Pesquisar"></button>
+    </div>
+
+  </form>
+  </div>
+
+  <div class="p-grid" class="tabela-usuario">
+    <div class="p-col-12 tabela-usuarios">
+      <app-usuario-grid [usuarios]="usuarios" [totalRegistros]="totalRegistros"></app-usuario-grid>
+    </div>
+
+    <div class="p-col-12 button-link-nova-acao">
+      <a pButton label="Novo Usuário" routerLink="/usuarios/novo"></a>
+    </div>
+  </div>
+
+</div>

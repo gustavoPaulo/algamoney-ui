@@ -1,0 +1,75 @@
+<div class="container">
+  <form #usuarioForm="ngForm" autocomplete="off" class="usuarioForm"
+    (ngSubmit)="salvar(usuarioForm)">
+
+    <div class="p-grid">
+      <div class="p-col-12">
+        <h1>{{ editando ? 'Edição de' : 'Novo' }} Usuário</h1>
+      </div>
+
+      <div class="p-col-12 p-fluid">
+        <label>Nome</label>
+        <input pInputText type="text" name="nome" ngModel #nome="ngModel" required minlength="5"
+          [(ngModel)]="usuario.nome" maxlength="25">
+
+        <app-message [control]="nome" error="required"
+          text="Informe o nome"></app-message>
+
+        <app-message [control]="nome" error="minlength"
+          text="Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres">
+        </app-message>
+
+        <app-message [control]="nome" error="maxlength"
+          text="Máximo de {{ nome.errors?.maxlength?.requiredLength }} caracteres">
+        </app-message>
+      </div>
+
+      <div class="p-col-12 p-md-6 p-fluid">
+        <label>E-mail</label>
+        <input pInputText type="email" name="email" ngModel #email="ngModel"
+          [(ngModel)]="usuario.email" email required>
+
+        <app-message [control]="email" error="required"
+          text="Informe o e-mail"></app-message>
+
+        <app-message [control]="email" error="email"
+          text="Informe um e-mail válido"></app-message>
+      </div>
+
+      <div class="p-col-12 p-md-6 p-fluid">
+        <label>Senha</label>
+        <input pInputText type="password" name="senha" ngModel #senha="ngModel" required
+          [(ngModel)]="usuario.senha" minlength="5" [disabled]="editando">
+
+        <app-message [control]="senha" error="required"
+          text="Informe a senha"></app-message>
+
+        <app-message [control]="senha" error="minlength"
+          text="Mínimo de {{ senha.errors?.minlength?.requiredLength }} caracteres">
+        </app-message>
+      </div>
+
+      <div class="p-col-12 p-fluid">
+        <label>Permissões</label>
+        <div class="p-col-12 p-fluid" class="p-field-checkbox"
+          *ngFor="let permissao of todasPermissoes">
+            <p-checkbox name="permissoes" ngModel #permissoes="ngModel"
+              [(ngModel)]="usuario.permissoes"
+              [value]="permissao">
+            </p-checkbox>
+            <label [for]="permissao.codigo">{{ permissao.descricao }}</label>
+        </div>
+      </div>
+
+      <div class="p-col-12">
+        <button pButton type="submit" label="Salvar" [disabled]="usuarioForm.invalid"></button>
+        <button pButton type="button" label="Novo" class="p-button-info"
+          (click)="novo(usuarioForm)"></button>
+        <a routerLink="/usuarios">
+          <p-button label="Voltar para a pesquisa" styleClass="p-button-link"></p-button>
+        </a>
+      </div>
+    </div>
+
+  </form>
+</div>

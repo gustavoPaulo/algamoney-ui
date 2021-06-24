@@ -1,0 +1,53 @@
+<p-table [value]="pessoas" styleClass="p-datatable-gridlines p-datatable-striped"
+              [responsive]="true"
+              [paginator]="true" [rows]="filtro.intensPorPagina"
+              [lazy]="true" [totalRecords]="totalRegistros"
+              (onLazyLoad)="aoMudarPagina($event)"
+              #tabela>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="col-pessoa-header">Nome</th>
+                <th class="col-pessoa-header">Cidade</th>
+                <th class="col-pessoa-header">Estado</th>
+                <th class="col-pessoa-header">Status</th>
+                <th class="col-acoes"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-pessoa>
+            <tr>
+                <td><span class="p-column-title">Nome</span>
+                  {{pessoa.nome}}</td>
+                <td><span class="p-column-title">Cidade</span>
+                  {{pessoa.endereco.cidade?.nome}}</td>
+                <td class="col-data-content"><span class="p-column-title">Estado</span>
+                  {{pessoa.endereco.cidade?.estado.nome}}</td>
+                <td>
+                  <span class="p-column-title">Status</span>
+                  <a style="color:#404C51;" href="javascript:;" [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'"
+                    tooltipPosition="top" (click)="mudarStatus(pessoa)">
+                    {{ pessoa.ativo ? 'Ativo' : 'Inativo' }}
+                  </a>
+                </td>
+
+                <td class="col-acoes">
+                  <a [routerLink]="['/pessoas', pessoa.codigo]">
+                    <button pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"
+                    [disabled]="!authPessoa.temPermissao('ROLE_CADASTRAR_PESSOA')"></button>
+                  </a>
+                  <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"
+                  (click)="confirmarExclusao(pessoa)"
+                  [disabled]="!authPessoa.temPermissao('ROLE_REMOVER_PESSOA')"></button>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="5">
+              Nenhuma pessoa encontrada.
+            </td>
+          </tr>
+        </ng-template>
+
+    </p-table>

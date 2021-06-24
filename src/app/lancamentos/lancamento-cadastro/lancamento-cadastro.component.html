@@ -1,0 +1,116 @@
+<div class="container">
+  <form #lancamentoForm="ngForm" autocomplete="off" class="lancamentoForm"
+    (ngSubmit)="salvar(lancamentoForm)">
+
+    <div class="p-grid">
+      <div class="p-col-12">
+        <h1>{{ editando ? 'Edição de' : 'Novo' }} Lançamento</h1>
+      </div>
+
+      <div class="p-col-12">
+        <p-selectButton [options]="tipoLancamento" #tipo="ngModel" name="tipo" ngModel
+          [(ngModel)]="lancamento.tipo"></p-selectButton>
+      </div>
+
+      <div class="p-col-6 p-md-3 p-fluid">
+        <label>Vencimento</label>
+        <p-calendar dateFormat="dd/mm/yy" [showIcon]="true" [readonlyInput]="true"
+          showButtonBar="true" [locale]="br" name="dataVencimento" ngModel
+          #dataVencimento="ngModel" required [(ngModel)]="lancamento.dataVencimento"></p-calendar>
+
+        <app-message [control]="dataVencimento" error="required"
+          text="Informe uma data de vencimento"></app-message>
+      </div>
+
+      <div class="p-col-6 p-md-3 p-fluid">
+        <label>{{ tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento' }}</label>
+        <p-calendar dateFormat="dd/mm/yy" [showIcon]="true" [readonlyInput]="true"
+          showButtonBar="true" [locale]="br" [(ngModel)]="lancamento.dataPagamento"
+          name="dataPagamento" ngModel #dataPagamento="ngModel"></p-calendar>
+      </div>
+
+      <div class="p-col-12 p-md-9 p-fluid">
+        <label>Descrição</label>
+        <input pInputText type="text" name="descricao" ngModel #descricao="ngModel"
+         required minlength="5" maxlength="90" [(ngModel)]="lancamento.descricao">
+
+        <app-message [control]="descricao" error="required"
+          text="Informe uma descrição"></app-message>
+
+        <app-message [control]="descricao" error="minlength"
+          text="Mínimo de {{ descricao.errors?.minlength?.requiredLength }} caracteres">
+        </app-message>
+      </div>
+
+      <div class="p-col-12 p-md-3 p-fluid">
+        <label>Valor</label>
+        <input pInputText type="text" placeholder="R$ 0,00" currencyMask
+          [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false }"
+          ngModel name="valor" #valor="ngModel" maxlength="30" required
+          [(ngModel)]="lancamento.valor">
+
+          <app-message [control]="valor" error="required"
+            text="Informe o valor"></app-message>
+      </div>
+
+      <div class="p-col-12 p-md-6 p-fluid">
+        <label>Categoria</label>
+        <p-dropdown [options]="categorias" [filter]="true" placeholder="Selecione"
+            required name="categoria" ngModel #categoria="ngModel"
+            [(ngModel)]="lancamento.categoria.codigo"></p-dropdown>
+
+        <app-message [control]="categoria" error="required"
+            text="Informe a categoria"></app-message>
+      </div>
+
+      <div class="p-col-12 p-md-6 p-fluid">
+        <label>Pessoa</label>
+        <p-dropdown [options]="pessoas" [filter]="true" placeholder="Selecione"
+          required name="pessoa" ngModel #pessoa="ngModel"
+          [(ngModel)]="lancamento.pessoa.codigo"></p-dropdown>
+
+        <app-message [control]="pessoa" error="required"
+          text="Informe uma pessoa"></app-message>
+      </div>
+
+      <div class="p-col-12 p-fluid">
+        <label>Observação</label>
+        <textarea pInputTextarea rows="3" name="observacao" ngModel #observacao="ngModel"
+          [(ngModel)]="lancamento.observacao"></textarea>
+      </div>
+
+      <div class="p-col-12 p-fluid" style="text-align:right"
+        *ngIf="!lancamento.anexo">
+        <p-fileUpload name="anexo" mode="basic" auto="true" maxFileSize="100000000"
+          chooseLabel="Anexar" accept="image/*,application/*"
+          [url]="urlUploadAnexo" (onUpload)="aoTerminarUploadAnexo($event)"
+          (onError)="erroUpload($event)" (onBeforeUpload)="antesUploadAnexo($event)"
+          [hidden]="uploadEmAndamento"></p-fileUpload>
+
+          <p-progressSpinner [style]="{ width: '25px', heigth: '25px' }"
+            [hidden]="!uploadEmAndamento"></p-progressSpinner>
+      </div>
+
+      <div class="p-col-12" *ngIf="lancamento.anexo" dir="rtl">
+        <button pButton type="button" class="p-button-danger botao-remover-anexo" icon="pi pi-times"
+          pTooltip="Remover anexo" tooltipPosition="top" (click)="removerAnexo()"></button>
+
+        <a [href]="lancamento.urlAnexo" target="_blank">
+          <p-button styleClass="p-button-link" pTooltip="Baixar anexo"
+            tooltipPosition="top">{{ nomeAnexo }}</p-button>
+        </a>
+      </div>
+
+      <div class="p-col-12">
+        <button pButton type="submit" label="Salvar"
+          [disabled]="lancamentoForm.invalid || uploadEmAndamento"></button>
+        <button pButton type="button" label="Novo" class="p-button-info"
+          (click)="novo(lancamentoForm)"></button>
+        <a routerLink="/lancamentos">
+          <p-button label="Voltar para a pesquisa" styleClass="p-button-link"></p-button>
+        </a>
+      </div>
+    </div>
+
+  </form>
+</div>
